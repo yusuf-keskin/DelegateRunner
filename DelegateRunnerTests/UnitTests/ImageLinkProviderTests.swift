@@ -34,9 +34,9 @@ final class LinkProviderServiceTests: XCTestCase, LinkProviderServiceDelegate {
         sut = nil
     }
 
-    func test_ImageLinkProvider_WhenValidEndpointProvided_ShouldReturnString() throws {
+    func test_LinkProvider_WhenValidEndpointProvided_ProvidesAnImageLinkString() throws {
         let asyncExpectation = try XCTUnwrap(expectation)
-        self.wait(for: [asyncExpectation], timeout: 1)
-        XCTAssertNotNil(imageLink,"When valid endpoint string provided, delegate should supply a url string")
+        self.wait(for: [asyncExpectation], timeout: 2)
+        XCTAssertNotNil(imageLink,"When valid endpoint string provided, imageLink should be not nil")
     }
 }

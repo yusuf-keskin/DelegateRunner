@@ -1,2 +1,2 @@
 # DelegateRunner
-Unit testing delegates and creating spy(mock) classes for delegates
+Unit testing delegates and creating stubs for delegates

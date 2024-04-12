@@ -1,5 +1,5 @@
 //
-//  Stubs.swift
+//  ValueStubs.swift
 //  DelegateRunnerTests
 //
 //  Created by YUSUF KESKİN on 12.04.2024.

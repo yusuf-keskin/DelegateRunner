@@ -17,15 +17,15 @@ protocol ImageVCViewModelDelegate: AnyObject {
 
 class ImageVCViewModel : ImageVCViewModelProtocol {
     
-    let imageLinkProvider : LinkProviderServiceProtocol
-    var viewModelDelegate : ImageVCViewModelDelegate?
+    weak var imageLinkProvider : LinkProviderServiceProtocol?
+    weak var viewModelDelegate : ImageVCViewModelDelegate?
     
-    init(imageLinkProvider: LinkProviderServiceProtocol) {
+    init(imageLinkProvider: LinkProviderServiceProtocol?) {
         self.imageLinkProvider = imageLinkProvider
-        imageLinkProvider.delegate = self
+        imageLinkProvider?.delegate = self
     }
     
-    private func getDataFromAPI(imageLink: String) async throws -> UIImage {
+    private func getImageFromAPI(imageLink: String) async throws -> UIImage {
         guard let url = URL(string: imageLink) else { throw ViewModelError.urlCreationError }
         
         let session = URLSession.shared
@@ -38,7 +38,6 @@ class ImageVCViewModel : ImageVCViewModelProtocol {
             guard let image = UIImage(data: responseData) else { throw ViewModelError.dataTypeError }
             return (image)
         } catch let error {
-            print(error)
             throw error
         }
     }
@@ -49,7 +48,7 @@ extension ImageVCViewModel : LinkProviderServiceDelegate {
     func getImageLink(imageUrlString: String) {
         Task{
             do {
-                let image = try await getDataFromAPI(imageLink: imageUrlString)
+                let image = try await getImageFromAPI(imageLink: imageUrlString)
                 viewModelDelegate?.getImage(image: image)
             } catch let error {
                 print(error)

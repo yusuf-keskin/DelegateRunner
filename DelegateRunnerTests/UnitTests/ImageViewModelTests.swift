@@ -11,7 +11,6 @@ import XCTest
 final class ImageViewModelTests: XCTestCase, ImageVCViewModelDelegate {
     
     func getImage(image: UIImage) {
-        print("hey")
         self.uiImage = image
         expectation?.fulfill()
     }
@@ -23,7 +22,7 @@ final class ImageViewModelTests: XCTestCase, ImageVCViewModelDelegate {
 
     override func setUpWithError() throws {
         expectation = XCTestExpectation(description: "ImageVCViewModel Provider Test Expectation")
-        imagelinkProvider = LinkProviderServiceSpy()    
+        imagelinkProvider = LinkProviderServiceStub()    
         sut = ImageVCViewModel(imageLinkProvider: imagelinkProvider!)
         sut?.viewModelDelegate = self
     }
@@ -34,9 +33,9 @@ final class ImageViewModelTests: XCTestCase, ImageVCViewModelDelegate {
         expectation = nil
     }
 
-    func testExample() throws {
+    func test_ImageVCViewModel_WhenValidImageLinkProvided_DownloadsAnImage() throws {
         let asyncExpectation = try XCTUnwrap(expectation)
         self.wait(for: [asyncExpectation], timeout: 1)
-        XCTAssertNotNil(uiImage,"When valid image link string provided, ImageVCViewModel data source should supply an UImage")
+        XCTAssertNotNil(uiImage,"When valid image link string provided, uiImage should be not nil.")
     }
 }

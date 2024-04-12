@@ -16,15 +16,19 @@ protocol LinkProviderServiceProtocol: AnyObject {
 }
 
 final class LinkProviderService: LinkProviderServiceProtocol {
-
+    
     var imageInfoLink : String
-    weak var delegate : LinkProviderServiceDelegate?
+    
+    weak var delegate : LinkProviderServiceDelegate? {
+        didSet {
+            Task {
+                try? await getDataFromAPI()
+            }
+        }
+    }
     
     init(imageInfoLink: String) {
         self.imageInfoLink = imageInfoLink
-        Task {
-            try? await getDataFromAPI()
-        }
     }
     
     private func getDataFromAPI() async throws {
