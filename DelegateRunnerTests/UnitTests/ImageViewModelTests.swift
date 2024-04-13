@@ -39,3 +39,30 @@ final class ImageViewModelTests: XCTestCase, ImageVCViewModelDelegate {
         XCTAssertNotNil(uiImage,"When valid image link string provided, uiImage should be not nil.")
     }
 }
+
+final class ImageViewModelTests2: XCTestCase {
+
+    var sut : ImageVCViewModelProtocol?
+    var imagelinkProvider: LinkProviderServiceProtocol?
+    var viewModelDelegate : ImageVCViewModelDelegate?
+    
+    override func setUpWithError() throws {
+        imagelinkProvider = LinkProviderServiceStub()
+        viewModelDelegate = ImageViewModelDelegateSpy(xcTestCase: self)
+        sut = ImageVCViewModel(imageLinkProvider: imagelinkProvider!)
+        sut?.viewModelDelegate = viewModelDelegate
+    }
+    
+    override func tearDownWithError() throws {
+        viewModelDelegate = nil
+        imagelinkProvider = nil
+        sut = nil
+    }
+    
+    func test_ImageVCViewModel_WhenValidImageLinkProvided_DownloadsAnImage() throws {
+        guard let delegate = viewModelDelegate as? ImageViewModelDelegateSpy else { return }
+        waitForExpectations(timeout: 1)
+        let image = try? XCTUnwrap(delegate.responseImage)
+        XCTAssertNotNil(image,"When valid image link string provided, image should be not nil.")
+    }
+}

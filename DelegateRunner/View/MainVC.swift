@@ -65,7 +65,7 @@ final class MainVC: UIViewController {
     
     @MainActor
     @objc private func openImageVC() {
-        let imageListService = LinkProviderService(imageInfoLink: IMAGE_INFO_LINK)
+        let imageListService = LinkProviderService(listApiEndpoint: IMAGE_INFO_LINK)
         let imageDownloadService = ImageVCViewModel(imageLinkProvider: imageListService)
         let imageVC = ImageVC()
         imageVC.imageDownloadService = imageDownloadService

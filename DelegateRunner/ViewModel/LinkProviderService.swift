@@ -17,7 +17,7 @@ protocol LinkProviderServiceProtocol: AnyObject {
 
 final class LinkProviderService: LinkProviderServiceProtocol {
     
-    var imageInfoLink : String
+    var listApiEndpoint : String
     
     weak var delegate : LinkProviderServiceDelegate? {
         didSet {
@@ -27,12 +27,12 @@ final class LinkProviderService: LinkProviderServiceProtocol {
         }
     }
     
-    init(imageInfoLink: String) {
-        self.imageInfoLink = imageInfoLink
+    init(listApiEndpoint: String) {
+        self.listApiEndpoint = listApiEndpoint
     }
     
     private func getDataFromAPI() async throws {
-        guard let url = URL(string: imageInfoLink) else { throw ViewModelError.urlCreationError }
+        guard let url = URL(string: listApiEndpoint) else { throw ViewModelError.urlCreationError }
         
         let session = URLSession.shared
         let (responseData, responseCode) = try await session.data(from: url)

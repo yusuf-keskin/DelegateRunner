@@ -22,7 +22,7 @@ final class LinkProviderServiceTests: XCTestCase, LinkProviderServiceDelegate {
 
     override func setUpWithError() throws {
         testUrl = IMAGE_INFO_LINK
-        sut = LinkProviderService(imageInfoLink: testUrl!)
+        sut = LinkProviderService(listApiEndpoint: testUrl!)
         sut?.delegate = self
         expectation = XCTestExpectation(description: "Image Link Provider Test Expectation")
     }
